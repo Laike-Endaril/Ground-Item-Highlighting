@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = GroundItemHighlighting.MODID, name = GroundItemHighlighting.NAME, version = GroundItemHighlighting.VERSION)
+@Mod(modid = GroundItemHighlighting.MODID, name = GroundItemHighlighting.NAME, version = GroundItemHighlighting.VERSION, acceptableRemoteVersions = "*")
 public class GroundItemHighlighting
 {
     public static final String MODID = "grounditemhighlighting";

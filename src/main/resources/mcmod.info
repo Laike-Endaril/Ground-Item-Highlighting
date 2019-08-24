@@ -1,0 +1,16 @@
+[
+{
+  "modid": "grounditemhighlighting",
+  "name": "Ground Item Highlighting",
+  "description": "Highlights ground items",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Laike_Endaril"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

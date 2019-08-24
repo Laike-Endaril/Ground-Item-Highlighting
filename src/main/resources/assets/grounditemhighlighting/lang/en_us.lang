@@ -1,0 +1,5 @@
+grounditemhighlighting.config.glow=Glow
+grounditemhighlighting.config.glow.tooltip=Whether ground items glow or not
+
+grounditemhighlighting.config.particles=Particles
+grounditemhighlighting.config.particles.tooltip=Whether ground items emit particles or not

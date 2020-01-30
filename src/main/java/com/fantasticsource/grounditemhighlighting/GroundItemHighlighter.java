@@ -17,9 +17,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import static com.fantasticsource.grounditemhighlighting.GroundItemHighlightingConfig.glow;
-import static com.fantasticsource.grounditemhighlighting.GroundItemHighlightingConfig.particles;
-
 @SideOnly(Side.CLIENT)
 public class GroundItemHighlighter
 {
@@ -28,8 +25,6 @@ public class GroundItemHighlighter
 
     public static void sync()
     {
-        System.out.println("Sync: " + Thread.currentThread().getName());
-
         filters.clear();
         for (String filterString : GroundItemHighlightingConfig.filter)
         {
@@ -75,21 +70,11 @@ public class GroundItemHighlighter
 
         if (GroundItemHighlightingConfig.whitelist)
         {
-            if (matchesFilter)
-            {
-                filteredGroundItems.add(item);
-                item.setGlowing(glow);
-            }
-            else item.setGlowing(false);
+            if (matchesFilter) filteredGroundItems.add(item);
         }
         else
         {
-            if (!matchesFilter)
-            {
-                filteredGroundItems.add(item);
-                item.setGlowing(glow);
-            }
-            else item.setGlowing(false);
+            if (!matchesFilter) filteredGroundItems.add(item);
         }
     }
 
@@ -110,17 +95,24 @@ public class GroundItemHighlighter
 
         for (EntityItem item : groundItems.toArray(new EntityItem[0]))
         {
-            if (!world.loadedEntityList.contains(item))
+            if (!world.loadedEntityList.contains(item) || item.world != world)
             {
+                item.setGlowing(false);
                 groundItems.remove(item);
                 filteredGroundItems.remove(item);
                 continue;
             }
 
-            if (particles && !Minecraft.getMinecraft().isGamePaused() && ClientTickTimer.currentTick() % 5 == 0 && filteredGroundItems.contains(item))
+            if (filteredGroundItems.contains(item))
             {
-                world.spawnParticle(EnumParticleTypes.END_ROD, item.posX, item.posY, item.posZ, (-0.5 + Math.random()) * 0.1, 0.25, (-0.5 + Math.random()) * 0.1);
+                item.setGlowing(GroundItemHighlightingConfig.glow);
+
+                if (GroundItemHighlightingConfig.particles && !Minecraft.getMinecraft().isGamePaused() && ClientTickTimer.currentTick() % 5 == 0)
+                {
+                    world.spawnParticle(EnumParticleTypes.END_ROD, item.posX, item.posY, item.posZ, (-0.5 + Math.random()) * 0.1, 0.25, (-0.5 + Math.random()) * 0.1);
+                }
             }
+            else item.setGlowing(false);
         }
     }
 }

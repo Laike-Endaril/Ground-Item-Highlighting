@@ -1,6 +1,5 @@
 package com.fantasticsource.grounditemhighlighting;
 
-import net.minecraft.entity.item.EntityItem;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
@@ -11,14 +10,12 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-import static com.fantasticsource.grounditemhighlighting.GroundItemHighlightingConfig.glow;
-
 @Mod(modid = GroundItemHighlighting.MODID, name = GroundItemHighlighting.NAME, version = GroundItemHighlighting.VERSION, acceptableRemoteVersions = "*", dependencies = "required-after:fantasticlib@[1.12.2.032,)")
 public class GroundItemHighlighting
 {
     public static final String MODID = "grounditemhighlighting";
     public static final String NAME = "Ground Item Highlighting";
-    public static final String VERSION = "1.12.2.002";
+    public static final String VERSION = "1.12.2.002a";
 
     @Mod.EventHandler
     public static void preInit(FMLPreInitializationEvent event)
@@ -28,6 +25,7 @@ public class GroundItemHighlighting
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
         {
             //Physical client
+            GroundItemHighlighter.sync();
             MinecraftForge.EVENT_BUS.register(GroundItemHighlighter.class);
         }
     }
@@ -43,7 +41,7 @@ public class GroundItemHighlighting
     {
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
         {
-            for (EntityItem item : GroundItemHighlighter.groundItems) item.setGlowing(glow);
+            GroundItemHighlighter.sync();
         }
     }
 }

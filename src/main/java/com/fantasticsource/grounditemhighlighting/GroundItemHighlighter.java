@@ -1,8 +1,11 @@
 package com.fantasticsource.grounditemhighlighting;
 
+import com.fantasticsource.mctools.ClientTickTimer;
+import com.fantasticsource.mctools.items.ItemFilter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Items;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -12,6 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import static com.fantasticsource.grounditemhighlighting.GroundItemHighlightingConfig.glow;
 import static com.fantasticsource.grounditemhighlighting.GroundItemHighlightingConfig.particles;
@@ -19,7 +23,23 @@ import static com.fantasticsource.grounditemhighlighting.GroundItemHighlightingC
 @SideOnly(Side.CLIENT)
 public class GroundItemHighlighter
 {
-    public static ArrayList<EntityItem> groundItems = new ArrayList<>();
+    public static ArrayList<ItemFilter> filters = new ArrayList<>();
+    public static HashSet<EntityItem> groundItems = new HashSet<>(), filteredGroundItems = new HashSet<>();
+
+    public static void sync()
+    {
+        System.out.println("Sync: " + Thread.currentThread().getName());
+
+        filters.clear();
+        for (String filterString : GroundItemHighlightingConfig.filter)
+        {
+            ItemFilter filter = ItemFilter.getInstance(filterString);
+            if (filter != null) filters.add(filter);
+        }
+
+        filteredGroundItems.clear();
+        for (EntityItem item : groundItems) onItemJoin(item);
+    }
 
     @SubscribeEvent
     public static void joinWorld(EntityJoinWorldEvent event)
@@ -31,7 +51,46 @@ public class GroundItemHighlighter
 
         EntityItem item = (EntityItem) entity;
         groundItems.add(item);
-        if (glow) item.setGlowing(true);
+
+        onItemJoin(item);
+    }
+
+    protected static void onItemJoin(EntityItem item)
+    {
+        if (item.getItem().getItem() == Items.AIR)
+        {
+            ClientTickTimer.schedule(1, () -> onItemJoin(item));
+            return;
+        }
+
+        boolean matchesFilter = false;
+        for (ItemFilter filter : filters)
+        {
+            if (filter.matches(item.getItem()))
+            {
+                matchesFilter = true;
+                break;
+            }
+        }
+
+        if (GroundItemHighlightingConfig.whitelist)
+        {
+            if (matchesFilter)
+            {
+                filteredGroundItems.add(item);
+                item.setGlowing(glow);
+            }
+            else item.setGlowing(false);
+        }
+        else
+        {
+            if (!matchesFilter)
+            {
+                filteredGroundItems.add(item);
+                item.setGlowing(glow);
+            }
+            else item.setGlowing(false);
+        }
     }
 
     @SubscribeEvent
@@ -40,22 +99,25 @@ public class GroundItemHighlighter
         if (event.phase == TickEvent.Phase.START) return;
 
         World world = Minecraft.getMinecraft().world;
+
         if (world == null)
         {
             groundItems.clear();
+            filteredGroundItems.clear();
             return;
         }
 
 
         for (EntityItem item : groundItems.toArray(new EntityItem[0]))
         {
-            if (item.world != world || !world.loadedEntityList.contains(item))
+            if (!world.loadedEntityList.contains(item))
             {
                 groundItems.remove(item);
+                filteredGroundItems.remove(item);
                 continue;
             }
 
-            if (particles && world.getWorldTime() % 5 == 0)
+            if (particles && !Minecraft.getMinecraft().isGamePaused() && ClientTickTimer.currentTick() % 5 == 0 && filteredGroundItems.contains(item))
             {
                 world.spawnParticle(EnumParticleTypes.END_ROD, item.posX, item.posY, item.posZ, (-0.5 + Math.random()) * 0.1, 0.25, (-0.5 + Math.random()) * 0.1);
             }

@@ -1,5 +1,11 @@
 grounditemhighlighting.config.glow=Glow
-grounditemhighlighting.config.glow.tooltip=Whether ground items glow or not
+grounditemhighlighting.config.glow.tooltip=FILLSCREEN FIXNEWLINES Whether ground items glow or not\n \n
 
 grounditemhighlighting.config.particles=Particles
-grounditemhighlighting.config.particles.tooltip=Whether ground items emit particles or not
+grounditemhighlighting.config.particles.tooltip=FILLSCREEN FIXNEWLINES Whether ground items emit particles or not\n \n
+
+grounditemhighlighting.config.whitelist=Whitelist Mode
+grounditemhighlighting.config.whitelist.tooltip=FILLSCREEN FIXNEWLINES Whether the filter is a whitelist or a blacklist.  True means whitelist, false means blacklist\n \n
+
+grounditemhighlighting.config.filter=Blacklist / Whitelist
+grounditemhighlighting.config.filter.tooltip=FILLSCREEN FIXNEWLINES A list of items to filter by.  Behavior depends on the 'whitelist mode' setting\n\nSyntax is...domain:item:meta > nbtkey1 = nbtvalue1 & nbtkey2 = nbtvalue2\n\nExamples:\ndirt\nstone\ndiamond_sword\nebwizardry:arcane_workbench\ntetra:duplex_tool_modular > duplex/sickle_left_material & duplex/butt_right_material"

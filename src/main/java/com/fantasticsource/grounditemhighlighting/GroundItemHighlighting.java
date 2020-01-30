@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import static com.fantasticsource.grounditemhighlighting.GroundItemHighlightingConfig.glow;
 
-@Mod(modid = GroundItemHighlighting.MODID, name = GroundItemHighlighting.NAME, version = GroundItemHighlighting.VERSION, acceptableRemoteVersions = "*")
+@Mod(modid = GroundItemHighlighting.MODID, name = GroundItemHighlighting.NAME, version = GroundItemHighlighting.VERSION, acceptableRemoteVersions = "*", dependencies = "required-after:fantasticlib@[1.12.2.032,)")
 public class GroundItemHighlighting
 {
     public static final String MODID = "grounditemhighlighting";

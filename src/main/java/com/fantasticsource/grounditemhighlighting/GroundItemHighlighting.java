@@ -10,12 +10,12 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = GroundItemHighlighting.MODID, name = GroundItemHighlighting.NAME, version = GroundItemHighlighting.VERSION, acceptableRemoteVersions = "*", dependencies = "required-after:fantasticlib@[1.12.2.032,)")
+@Mod(modid = GroundItemHighlighting.MODID, name = GroundItemHighlighting.NAME, version = GroundItemHighlighting.VERSION, acceptableRemoteVersions = "*", dependencies = "required-after:fantasticlib@[1.12.2.033,)")
 public class GroundItemHighlighting
 {
     public static final String MODID = "grounditemhighlighting";
     public static final String NAME = "Ground Item Highlighting";
-    public static final String VERSION = "1.12.2.002a";
+    public static final String VERSION = "1.12.2.003";
 
     @Mod.EventHandler
     public static void preInit(FMLPreInitializationEvent event)

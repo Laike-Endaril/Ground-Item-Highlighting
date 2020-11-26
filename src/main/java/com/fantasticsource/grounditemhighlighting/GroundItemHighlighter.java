@@ -3,8 +3,8 @@ package com.fantasticsource.grounditemhighlighting;
 import com.fantasticsource.mctools.ClientTickTimer;
 import com.fantasticsource.mctools.items.ItemFilter;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.ParticleEndRod;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -46,7 +46,7 @@ public class GroundItemHighlighter
 
                 if (GroundItemHighlightingConfig.particles && !Minecraft.getMinecraft().isGamePaused() && ClientTickTimer.currentTick() % 5 == 0)
                 {
-                    Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(EnumParticleTypes.END_ROD.getParticleID(), item.posX, item.posY, item.posZ, (-0.5 + Math.random()) * 0.1, 0.25, (-0.5 + Math.random()) * 0.1);
+                    Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEndRod(world, item.posX, item.posY, item.posZ, (-0.5 + Math.random()) * 0.1, 0.25, (-0.5 + Math.random()) * 0.1));
                 }
             }
             else item.setGlowing(false);

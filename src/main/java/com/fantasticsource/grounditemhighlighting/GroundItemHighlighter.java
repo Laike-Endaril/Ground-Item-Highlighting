@@ -46,7 +46,7 @@ public class GroundItemHighlighter
 
                 if (GroundItemHighlightingConfig.particles && !Minecraft.getMinecraft().isGamePaused() && ClientTickTimer.currentTick() % 5 == 0)
                 {
-                    world.spawnParticle(EnumParticleTypes.END_ROD, item.posX, item.posY, item.posZ, (-0.5 + Math.random()) * 0.1, 0.25, (-0.5 + Math.random()) * 0.1);
+                    Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(EnumParticleTypes.END_ROD.getParticleID(), item.posX, item.posY, item.posZ, (-0.5 + Math.random()) * 0.1, 0.25, (-0.5 + Math.random()) * 0.1);
                 }
             }
             else item.setGlowing(false);

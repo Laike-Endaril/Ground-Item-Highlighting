@@ -1,9 +1,13 @@
 package com.fantasticsource.grounditemhighlighting;
 
-import com.fantasticsource.mctools.ClientTickTimer;
+import com.fantasticsource.mctools.PathedParticle;
+import com.fantasticsource.mctools.component.path.CPathFollowEntity;
 import com.fantasticsource.mctools.items.ItemFilter;
+import com.fantasticsource.tools.component.path.CPath;
+import com.fantasticsource.tools.component.path.CPathConstant;
+import com.fantasticsource.tools.datastructures.Color;
+import com.fantasticsource.tools.datastructures.VectorN;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ParticleEndRod;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -16,6 +20,8 @@ import java.util.ArrayList;
 @SideOnly(Side.CLIENT)
 public class GroundItemHighlighter
 {
+    protected static final CPathConstant ITEM_CENTER_OFFSET = new CPathConstant(new VectorN(0, 0.5, 0));
+
     public static ArrayList<ItemFilter> filters = new ArrayList<>();
 
     public static void sync()
@@ -44,9 +50,44 @@ public class GroundItemHighlighter
             {
                 item.setGlowing(GroundItemHighlightingConfig.glow);
 
-                if (GroundItemHighlightingConfig.particles && !Minecraft.getMinecraft().isGamePaused() && ClientTickTimer.currentTick() % 5 == 0)
+                if (GroundItemHighlightingConfig.particles && !Minecraft.getMinecraft().isGamePaused())
                 {
-                    Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEndRod(world, item.posX, item.posY, item.posZ, (-0.5 + Math.random()) * 0.1, 0.25, (-0.5 + Math.random()) * 0.1));
+                    CPath path = new CPathFollowEntity(item).add(ITEM_CENTER_OFFSET);
+
+                    PathedParticle[] particles = new PathedParticle[3];
+                    PathedParticle particle = new PathedParticle(world, path);
+                    particle.xScale3D = 0.05;
+                    particle.yScale3D = 5;
+                    particle.zScale3D = 0.05;
+                    particles[0] = particle;
+
+                    particle = new PathedParticle(world, path);
+                    particle.xScale3D = 3;
+                    particle.yScale3D = 0.05;
+                    particle.zScale3D = 0.05;
+                    particles[1] = particle;
+
+                    particle = new PathedParticle(world, path);
+                    particle.xScale3D = 0.05;
+                    particle.yScale3D = 0.05;
+                    particle.zScale3D = 3;
+                    particles[2] = particle;
+
+                    for (PathedParticle particle2 : particles)
+                    {
+                        particle2.setParticleTextureIndex(167);
+                        particle2.setAlphaF(0.1f);
+                        particle2.setMaxAge(5);
+                    }
+
+                    if (GroundItemHighlighting.compatTiamatItems)
+                    {
+                        Color c = com.fantasticsource.grounditemhighlighting.CompatTiamatItems.getItemRarityColor(item.getItem()).copy().setVF(0.7f);
+                        for (PathedParticle particle2 : particles)
+                        {
+                            particle2.setRBGColorF(c.rf(), c.gf(), c.bf());
+                        }
+                    }
                 }
             }
             else item.setGlowing(false);

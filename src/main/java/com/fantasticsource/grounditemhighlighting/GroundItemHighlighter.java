@@ -8,7 +8,9 @@ import com.fantasticsource.tools.component.path.CPathConstant;
 import com.fantasticsource.tools.datastructures.Color;
 import com.fantasticsource.tools.datastructures.VectorN;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -20,7 +22,9 @@ import java.util.ArrayList;
 @SideOnly(Side.CLIENT)
 public class GroundItemHighlighter
 {
-    protected static final CPathConstant ITEM_CENTER_OFFSET = new CPathConstant(new VectorN(0, 0.5, 0));
+    protected static final CPathConstant
+            ITEM_CENTER_OFFSET = new CPathConstant(new VectorN(0, 0.5, 0)),
+            BLOCK_ITEM_CENTER_OFFSET = new CPathConstant(new VectorN(0, 0.35, 0));
 
     public static ArrayList<ItemFilter> filters = new ArrayList<>();
 
@@ -52,22 +56,22 @@ public class GroundItemHighlighter
 
                 if (GroundItemHighlightingConfig.particles && !Minecraft.getMinecraft().isGamePaused())
                 {
-                    CPath path = new CPathFollowEntity(item).add(ITEM_CENTER_OFFSET);
+                    CPath path = new CPathFollowEntity(item).add(item.getItem().getItem() instanceof ItemBlock ? BLOCK_ITEM_CENTER_OFFSET : ITEM_CENTER_OFFSET);
 
                     PathedParticle[] particles = new PathedParticle[3];
-                    PathedParticle particle = new PathedParticle(world, path);
+                    PathedParticle particle = new PathedParticle(world, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE, path);
                     particle.xScale3D = 0.05;
                     particle.yScale3D = 5;
                     particle.zScale3D = 0.05;
                     particles[0] = particle;
 
-                    particle = new PathedParticle(world, path);
+                    particle = new PathedParticle(world, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE, path);
                     particle.xScale3D = 3;
                     particle.yScale3D = 0.05;
                     particle.zScale3D = 0.05;
                     particles[1] = particle;
 
-                    particle = new PathedParticle(world, path);
+                    particle = new PathedParticle(world, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE, path);
                     particle.xScale3D = 0.05;
                     particle.yScale3D = 0.05;
                     particle.zScale3D = 3;
@@ -75,9 +79,12 @@ public class GroundItemHighlighter
 
                     for (PathedParticle particle2 : particles)
                     {
-                        particle2.setParticleTextureIndex(167);
-                        particle2.setAlphaF(0.1f);
-                        particle2.setMaxAge(5);
+                        particle2.u1 = 32d / 128;
+                        particle2.v1 = 16d / 128;
+                        particle2.u2 = 64d / 128;
+                        particle2.v2 = 48d / 128;
+                        particle2.setAlphaF(0.2f);
+                        particle2.setMaxAge(2);
                     }
 
                     if (GroundItemHighlighting.compatTiamatItems)

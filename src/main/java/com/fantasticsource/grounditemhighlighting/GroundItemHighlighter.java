@@ -59,19 +59,19 @@ public class GroundItemHighlighter
                     CPath path = new CPathFollowEntity(item).add(item.getItem().getItem() instanceof ItemBlock ? BLOCK_ITEM_CENTER_OFFSET : ITEM_CENTER_OFFSET);
 
                     PathedParticle[] particles = new PathedParticle[3];
-                    PathedParticle particle = new PathedParticle(world, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE, path);
+                    PathedParticle particle = new PathedParticle(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE, path);
                     particle.xScale3D = 0.05;
                     particle.yScale3D = 5;
                     particle.zScale3D = 0.05;
                     particles[0] = particle;
 
-                    particle = new PathedParticle(world, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE, path);
+                    particle = new PathedParticle(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE, path);
                     particle.xScale3D = 3;
                     particle.yScale3D = 0.05;
                     particle.zScale3D = 0.05;
                     particles[1] = particle;
 
-                    particle = new PathedParticle(world, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE, path);
+                    particle = new PathedParticle(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE, path);
                     particle.xScale3D = 0.05;
                     particle.yScale3D = 0.05;
                     particle.zScale3D = 3;

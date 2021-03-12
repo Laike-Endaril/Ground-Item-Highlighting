@@ -4,6 +4,9 @@ grounditemhighlighting.config.glow.tooltip=FILLSCREEN FIXNEWLINES Whether ground
 grounditemhighlighting.config.particles=Particles
 grounditemhighlighting.config.particles.tooltip=FILLSCREEN FIXNEWLINES Whether ground items emit particles or not\n \n
 
+grounditemhighlighting.config.particleSize=Particle Size
+grounditemhighlighting.config.particleSize.tooltip=FILLSCREEN FIXNEWLINES How large emitted particles are\n \n
+
 grounditemhighlighting.config.whitelist=Whitelist Mode
 grounditemhighlighting.config.whitelist.tooltip=FILLSCREEN FIXNEWLINES Whether the filter is a whitelist or a blacklist.  True means whitelist, false means blacklist\n \n
 

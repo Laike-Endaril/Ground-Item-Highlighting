@@ -15,6 +15,11 @@ public class GroundItemHighlightingConfig
     @Config.Comment("Whether ground items emit particles or not")
     public static boolean particles = true;
 
+    @Config.Name("021 Particle Size")
+    @Config.LangKey(GroundItemHighlighting.MODID + ".config.particles")
+    @Config.Comment("How large emitted particles are")
+    public static double particleSize = 5;
+
     @Config.Name("030 Whitelist Mode")
     @Config.LangKey(GroundItemHighlighting.MODID + ".config.whitelist")
     @Config.Comment("Whether the filter is a whitelist or a blacklist.  True means whitelist, false means blacklist")

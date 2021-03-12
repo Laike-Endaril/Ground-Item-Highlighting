@@ -48,6 +48,7 @@ public class GroundItemHighlighter
         if (world == null) return;
 
 
+        double size = GroundItemHighlightingConfig.particleSize;
         for (EntityItem item : world.getEntities(EntityItem.class, o -> true))
         {
             if (matchesFilters(item) == GroundItemHighlightingConfig.whitelist)
@@ -61,12 +62,12 @@ public class GroundItemHighlighter
                     PathedParticle[] particles = new PathedParticle[3];
                     PathedParticle particle = new PathedParticle(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, path);
                     particle.xScale3D = 0.05;
-                    particle.yScale3D = 5;
+                    particle.yScale3D = size;
                     particle.zScale3D = 0.05;
                     particles[0] = particle;
 
                     particle = new PathedParticle(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE, path);
-                    particle.xScale3D = 3;
+                    particle.xScale3D = size * 3 / 5;
                     particle.yScale3D = 0.05;
                     particle.zScale3D = 0.05;
                     particles[1] = particle;
@@ -74,7 +75,7 @@ public class GroundItemHighlighter
                     particle = new PathedParticle(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE, path);
                     particle.xScale3D = 0.05;
                     particle.yScale3D = 0.05;
-                    particle.zScale3D = 3;
+                    particle.zScale3D = size * 3 / 5;
                     particles[2] = particle;
 
                     for (PathedParticle particle2 : particles)

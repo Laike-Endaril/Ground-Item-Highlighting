@@ -66,13 +66,13 @@ public class GroundItemHighlighter
                     particle.zScale3D = 0.05;
                     particles[0] = particle;
 
-                    particle = new PathedParticle(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE, path);
+                    particle = new PathedParticle(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, path);
                     particle.xScale3D = size * 3 / 5;
                     particle.yScale3D = 0.05;
                     particle.zScale3D = 0.05;
                     particles[1] = particle;
 
-                    particle = new PathedParticle(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE, path);
+                    particle = new PathedParticle(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, path);
                     particle.xScale3D = 0.05;
                     particle.yScale3D = 0.05;
                     particle.zScale3D = size * 3 / 5;

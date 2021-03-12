@@ -17,7 +17,7 @@ public class GroundItemHighlighting
 {
     public static final String MODID = "grounditemhighlighting";
     public static final String NAME = "Ground Item Highlighting";
-    public static final String VERSION = "1.12.2.003c";
+    public static final String VERSION = "1.12.2.003d";
 
     public static boolean compatTiamatItems = false;
 
